@@ -314,52 +314,125 @@
     /* ══════════════════════════════════════
        CATEGORIES SECTION
     ══════════════════════════════════════ */
-    .cats-section {
-      background: rgba(0,0,25,.25);
-    }
+    ```css
+.cats-section {
+  background: rgba(0, 0, 25, .25);
+  padding: 2rem 0;
+}
 
-    /* Tab bar */
-    .cat-tabs {
-      display: flex; gap: 0;
-      border: 1px solid var(--gold-mid);
-      margin-bottom: 2rem; overflow: hidden;
-    }
+/* Tab bar */
+.cat-tabs {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--gold-mid);
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+  border-radius: 10px;
+}
 
-    .cat-tab {
-      flex: 1; padding: .9rem 1rem;
-      background: transparent; border: none;
-      border-right: 1px solid var(--gold-mid);
-      color: var(--gold-dim);
-      font-family: var(--ff-body); font-size: .78rem;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      cursor: pointer; transition: all .25s;
-    }
-    .cat-tab:last-child { border-right: none; }
-    .cat-tab:hover { background: var(--gold-faint); color: var(--gold); }
-    .cat-tab.active {
-      background: var(--gold); color: var(--blue);
-      font-weight: 600;
-    }
+/* Individual tabs */
+.cat-tab {
+  flex: 1;
+  min-height: 78px; /* Increased height */
+  padding: 1.2rem 1.4rem;
 
-    /* Tab content */
-    .cat-panel { display: none; animation: fadeIn .4s ease; }
-    .cat-panel.active { display: block; }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
-    .cat-desc {
-      border-left: 3px solid var(--gold);
-      padding: 1.1rem 1.5rem;
-      background: var(--gold-faint);
-      margin-bottom: 1.75rem;
-      font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,0.88);
-      font-weight: 400;
-    }
-    .cat-desc strong { color: var(--gold); font-weight: 600; }
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--gold-mid);
 
-    .honors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
-    }
+  color: var(--gold-dim);
+
+  font-family: var(--ff-body);
+  font-size: .82rem;
+  line-height: 1.5;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.cat-tab:last-child {
+  border-right: none;
+}
+
+.cat-tab:hover {
+  background: var(--gold-faint);
+  color: var(--gold);
+}
+
+.cat-tab.active {
+  background: var(--gold);
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* Tab content */
+.cat-panel {
+  display: none;
+  animation: fadeIn .4s ease;
+}
+
+.cat-panel.active {
+  display: block;
+}
+
+.cat-desc {
+  border-left: 3px solid var(--gold);
+  padding: 1.25rem 1.6rem;
+  background: var(--gold-faint);
+
+  margin-bottom: 2rem;
+  border-radius: 0 8px 8px 0;
+
+  font-size: .95rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.88);
+  font-weight: 400;
+}
+
+.cat-desc strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Cards Grid */
+.honors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.4rem;
+  align-items: stretch;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+
+  .cat-tabs {
+    flex-direction: column;
+  }
+
+  .cat-tab {
+    min-height: 68px;
+    border-right: none;
+    border-bottom: 1px solid var(--gold-mid);
+  }
+
+  .cat-tab:last-child {
+    border-bottom: none;
+  }
+
+  .honors-grid {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
 
     /* ── Flip card shell ── */
     .honor-card {
@@ -1268,95 +1341,154 @@
 
 
     /* ══════════════════════════════════════
-       TRACKER SECTION
+       TRACKER SECTION — PREMIUM REDESIGN
     ══════════════════════════════════════ */
     .tracker-section {
-      padding: 3.5rem 5%;
-      background: rgba(0,0,20,.35);
-      border-top: 1px solid var(--gold-mid);
-      border-bottom: 1px solid var(--gold-mid);
+      padding: 0 5%;
+      background:
+        linear-gradient(180deg, rgba(0,0,15,.55) 0%, rgba(10,5,40,.45) 100%);
+      border-top: 1px solid rgba(250,208,5,0.18);
+      border-bottom: 1px solid rgba(250,208,5,0.18);
       position: relative; z-index: 1;
+      overflow: hidden;
     }
+
+    /* Subtle diagonal lines texture */
+    .tracker-section::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(250,208,5,0.018) 0px, rgba(250,208,5,0.018) 1px,
+        transparent 1px, transparent 28px
+      );
+    }
+
+    /* Top & bottom gold accent lines */
     .tracker-section::before {
       content: '';
-      position: absolute; top: 0; left: 5%; right: 5%; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(250,208,5,0.35), transparent);
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(250,208,5,0.06) 10%,
+        rgba(250,208,5,0.55) 40%,
+        rgba(250,208,5,0.9) 50%,
+        rgba(250,208,5,0.55) 60%,
+        rgba(250,208,5,0.06) 90%,
+        transparent 100%
+      );
+      z-index: 2;
     }
 
     .tracker-inner {
-      max-width: 900px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: center;
-      gap: 0;
+      max-width: 960px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      position: relative; z-index: 1;
+    }
+
+    /* Vertical dividers between items */
+    .tracker-item + .tracker-item {
+      border-left: 1px solid rgba(250,208,5,0.12);
     }
 
     .tracker-item {
-      flex: 1; text-align: center;
-      padding: 1.75rem 1.5rem;
+      padding: 2.8rem 2rem;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: 0;
       position: relative;
-      transition: background .3s;
+      transition: background .35s;
     }
     .tracker-item:hover {
-      background: rgba(250,208,5,.05);
-    }
-    .tracker-item + .tracker-item::before {
-      content: '';
-      position: absolute; left: 0; top: 15%; bottom: 15%;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, var(--gold-mid), transparent);
+      background: rgba(250,208,5,.035);
     }
 
+    /* SVG icon circle */
+    .tracker-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(250,208,5,0.3);
+      background: rgba(250,208,5,0.07);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 0 20px rgba(250,208,5,0.08), inset 0 1px 0 rgba(250,208,5,0.12);
+      transition: border-color .3s, box-shadow .3s, background .3s;
+    }
+    .tracker-item:hover .tracker-icon-wrap {
+      border-color: rgba(250,208,5,0.6);
+      background: rgba(250,208,5,0.12);
+      box-shadow: 0 0 30px rgba(250,208,5,0.2), inset 0 1px 0 rgba(250,208,5,0.2);
+    }
     .tracker-icon {
-      font-size: 1.6rem; display: block; margin-bottom: .6rem;
-      filter: drop-shadow(0 0 8px rgba(250,208,5,0.5));
+      font-size: 1.35rem; line-height: 1;
+      filter: drop-shadow(0 0 6px rgba(250,208,5,0.6));
+    }
+
+    /* Eyebrow label above number */
+    .tracker-eyebrow {
+      font-size: .6rem; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(250,208,5,0.5);
+      font-weight: 600; margin-bottom: .4rem;
+      font-family: var(--ff-body);
     }
 
     .tracker-num {
       font-family: var(--ff-display);
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-size: clamp(2.6rem, 5vw, 4rem);
       font-weight: 700; color: var(--gold);
       display: block; line-height: 1;
-      text-shadow: 0 0 30px rgba(250,208,5,0.5);
-      filter: drop-shadow(0 0 16px rgba(250,208,5,0.4));
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #ffd700 0%, #fff8b0 45%, #fad005 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 18px rgba(250,208,5,0.35));
     }
 
     .tracker-lbl {
-      display: block; margin-top: .5rem;
-      font-size: .68rem; letter-spacing: 2.5px;
-      text-transform: uppercase; color: rgba(255,255,255,0.72);
-      font-weight: 500;
+      display: block; margin-top: .6rem;
+      font-size: .7rem; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.6);
+      font-weight: 500; font-family: var(--ff-body);
     }
 
-    .tracker-bar {
-      height: 3px; margin-top: 1rem;
-      background: rgba(250,208,5,.12);
-      border-radius: 2px; overflow: hidden;
-      position: relative;
+    /* Thin gold rule under label */
+    .tracker-rule {
+      width: 28px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(250,208,5,0.5), transparent);
+      margin: .85rem auto 0;
     }
-    .tracker-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold), rgba(255,230,50,.6));
-      border-radius: 2px;
-      animation: barGrow 1.4s cubic-bezier(.4,0,.2,1) both;
-      transform-origin: left;
-    }
-    @keyframes barGrow {
-      from { width: 0; }
-      to   { width: var(--pct, 70%); }
+
+    /* Bottom accent line */
+    .tracker-section-bottom-line {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(250,208,5,0.06) 10%,
+        rgba(250,208,5,0.45) 40%,
+        rgba(250,208,5,0.8) 50%,
+        rgba(250,208,5,0.45) 60%,
+        rgba(250,208,5,0.06) 90%,
+        transparent 100%
+      );
+      z-index: 2;
     }
 
     @media (max-width: 600px) {
-      .tracker-inner { flex-direction: column; gap: 0; }
-      .tracker-item + .tracker-item::before {
-        left: 15%; right: 15%; top: 0; bottom: auto;
-        width: auto; height: 1px;
-        background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
+      .tracker-inner {
+        grid-template-columns: 1fr;
       }
-      .tracker-item { width: 100%; }
+      .tracker-item + .tracker-item {
+        border-left: none;
+        border-top: 1px solid rgba(250,208,5,0.12);
+      }
+      .tracker-item { padding: 2rem 1.5rem; }
     }
 
   </style>
 </head>
 <body>
+
 
   <!-- Particle canvas -->
   <canvas id="particles-canvas"></canvas>
