@@ -1199,6 +1199,94 @@
     /* Full-width field helper */
     .field-full { grid-column: 1 / -1; }
 
+
+    /* ══════════════════════════════════════
+       TRACKER SECTION
+    ══════════════════════════════════════ */
+    .tracker-section {
+      padding: 3.5rem 5%;
+      background: rgba(0,0,20,.35);
+      border-top: 1px solid var(--gold-mid);
+      border-bottom: 1px solid var(--gold-mid);
+      position: relative; z-index: 1;
+    }
+    .tracker-section::before {
+      content: '';
+      position: absolute; top: 0; left: 5%; right: 5%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(250,208,5,0.35), transparent);
+    }
+
+    .tracker-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center;
+      gap: 0;
+    }
+
+    .tracker-item {
+      flex: 1; text-align: center;
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      transition: background .3s;
+    }
+    .tracker-item:hover {
+      background: rgba(250,208,5,.05);
+    }
+    .tracker-item + .tracker-item::before {
+      content: '';
+      position: absolute; left: 0; top: 15%; bottom: 15%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold-mid), transparent);
+    }
+
+    .tracker-icon {
+      font-size: 1.6rem; display: block; margin-bottom: .6rem;
+      filter: drop-shadow(0 0 8px rgba(250,208,5,0.5));
+    }
+
+    .tracker-num {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700; color: var(--gold);
+      display: block; line-height: 1;
+      text-shadow: 0 0 30px rgba(250,208,5,0.5);
+      filter: drop-shadow(0 0 16px rgba(250,208,5,0.4));
+    }
+
+    .tracker-lbl {
+      display: block; margin-top: .5rem;
+      font-size: .68rem; letter-spacing: 2.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.72);
+      font-weight: 500;
+    }
+
+    .tracker-bar {
+      height: 3px; margin-top: 1rem;
+      background: rgba(250,208,5,.12);
+      border-radius: 2px; overflow: hidden;
+      position: relative;
+    }
+    .tracker-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), rgba(255,230,50,.6));
+      border-radius: 2px;
+      animation: barGrow 1.4s cubic-bezier(.4,0,.2,1) both;
+      transform-origin: left;
+    }
+    @keyframes barGrow {
+      from { width: 0; }
+      to   { width: var(--pct, 70%); }
+    }
+
+    @media (max-width: 600px) {
+      .tracker-inner { flex-direction: column; gap: 0; }
+      .tracker-item + .tracker-item::before {
+        left: 15%; right: 15%; top: 0; bottom: auto;
+        width: auto; height: 1px;
+        background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
+      }
+      .tracker-item { width: 100%; }
+    }
+
   </style>
 </head>
 <body>
@@ -1262,6 +1350,43 @@
       <div class="scroll-line"></div>
     </div>
   </section>
+
+
+  <!-- ══════════════════════════════════════
+       LIVE TRACKER
+  ══════════════════════════════════════ -->
+  <div class="tracker-section" id="tracker">
+    <div class="tracker-inner">
+
+      <div class="tracker-item">
+        <span class="tracker-icon">🗳️</span>
+        <span class="tracker-num" id="tVotes">1,248</span>
+        <span class="tracker-lbl">Votes Cast</span>
+        <div class="tracker-bar">
+          <div class="tracker-bar-fill" style="--pct:78%"></div>
+        </div>
+      </div>
+
+      <div class="tracker-item">
+        <span class="tracker-icon">🏅</span>
+        <span class="tracker-num" id="tNominees">342</span>
+        <span class="tracker-lbl">Nominees</span>
+        <div class="tracker-bar">
+          <div class="tracker-bar-fill" style="--pct:55%"></div>
+        </div>
+      </div>
+
+      <div class="tracker-item">
+        <span class="tracker-icon">🏆</span>
+        <span class="tracker-num" id="tCategories">3</span>
+        <span class="tracker-lbl">Categories</span>
+        <div class="tracker-bar">
+          <div class="tracker-bar-fill" style="--pct:100%"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 
   <!-- ══════════════════════════════════════
@@ -1659,6 +1784,56 @@
               </select>
             </div>
           </div>
+          <div class="frow">
+            <div class="field field-full">
+              <label>Sub Category <span class="req">*</span></label>
+              <select id="subCategory" required>
+                <option value="">Select sub category</option>
+                <optgroup label="Entrepreneur Achievement">
+                  <option value="Startup Founder">Startup Founder</option>
+                  <option value="Scale-up &amp; Growth">Scale-up &amp; Growth</option>
+                  <option value="Social Enterprise">Social Enterprise</option>
+                  <option value="Women Entrepreneur">Women Entrepreneur</option>
+                </optgroup>
+                <optgroup label="Professional Excellence">
+                  <option value="Corporate Leadership">Corporate Leadership</option>
+                  <option value="Government / Public Sector">Government / Public Sector</option>
+                  <option value="Defence &amp; Civil Services">Defence &amp; Civil Services</option>
+                  <option value="Healthcare &amp; Medicine">Healthcare &amp; Medicine</option>
+                </optgroup>
+                <optgroup label="Academics, Arts &amp; Beyond">
+                  <option value="Academic Research">Academic Research</option>
+                  <option value="Literature &amp; Writing">Literature &amp; Writing</option>
+                  <option value="Performing Arts">Performing Arts</option>
+                  <option value="Politics &amp; Governance">Politics &amp; Governance</option>
+                  <option value="Sports &amp; Athletics">Sports &amp; Athletics</option>
+                </optgroup>
+                <optgroup label="Technology Leadership">
+                  <option value="AI / Machine Learning">AI / Machine Learning</option>
+                  <option value="Software &amp; Product">Software &amp; Product</option>
+                  <option value="Hardware &amp; Innovation">Hardware &amp; Innovation</option>
+                  <option value="Patent &amp; Research">Patent &amp; Research</option>
+                </optgroup>
+                <optgroup label="Social Impact">
+                  <option value="Community Development">Community Development</option>
+                  <option value="Environmental Sustainability">Environmental Sustainability</option>
+                  <option value="Education &amp; Literacy">Education &amp; Literacy</option>
+                  <option value="Healthcare Access">Healthcare Access</option>
+                </optgroup>
+                <optgroup label="Alumni Engagement">
+                  <option value="Chapter Leadership">Chapter Leadership</option>
+                  <option value="Placement &amp; Mentorship">Placement &amp; Mentorship</option>
+                  <option value="Contribution to Alma Mater">Contribution to Alma Mater</option>
+                  <option value="GEU Brand Ambassador">GEU Brand Ambassador</option>
+                </optgroup>
+                <optgroup label="Chancellor's Award">
+                  <option value="Lifetime Achievement">Lifetime Achievement</option>
+                  <option value="Global Recognition">Global Recognition</option>
+                </optgroup>
+              </select>
+              <span class="field-hint">Select the sub category that best describes the nominee's area of distinction</span>
+            </div>
+          </div>
         </div>
 
         <!-- ⑦ Achievement Details -->
@@ -1881,7 +2056,7 @@
     'institute','course','branch','passoutYear',
     'whatsapp','city','email',
     'company','designation',
-    'awardType','achievementCategory','achievementDetails'
+    'awardType','achievementCategory','subCategory','achievementDetails'
   ];
 
   function validate() {
@@ -1949,6 +2124,7 @@
         designation:         document.getElementById('designation').value,
         awardType:           document.getElementById('awardType').value,
         achievementCategory: document.getElementById('achievementCategory').value,
+        subCategory:         document.getElementById('subCategory').value,
         achievementDetails:  document.getElementById('achievementDetails').value,
         documents:           docs,
         media:               media
