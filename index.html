@@ -361,19 +361,84 @@
       gap: 1rem;
     }
 
+    /* ── Flip card shell ── */
     .honor-card {
-      display: flex; align-items: flex-start; gap: 1rem;
-      padding: 1.4rem 1.25rem;
+      position: relative;
+      min-height: 200px;
+      perspective: 1000px;
+      border: none;
+      background: transparent;
+      cursor: default;
+    }
+
+    .honor-card-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      min-height: 200px;
+      transform-style: preserve-3d;
+      transition: transform .55s cubic-bezier(.4,0,.2,1);
+    }
+
+    .honor-card:hover .honor-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* Front face */
+    .honor-front, .honor-back {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      padding: 1.5rem 1.4rem;
       border: 1px solid var(--gold-mid);
-      background: var(--gold-faint);
-      transition: border-color .25s, background .25s, transform .25s, box-shadow .25s;
     }
-    .honor-card:hover {
-      border-color: rgba(250,208,5,.65);
-      background: rgba(250,208,5,.12);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25), 0 0 20px rgba(250,208,5,0.08);
+
+    .honor-front {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: rgba(20,15,60,0.6);
+      backdrop-filter: blur(6px);
+      transition: border-color .25s, box-shadow .25s;
     }
+    .honor-card:hover .honor-front {
+      border-color: rgba(250,208,5,.6);
+      box-shadow: 0 12px 45px rgba(0,0,0,0.4), 0 0 35px rgba(250,208,5,0.15);
+    }
+
+    /* Back face */
+    .honor-back {
+      background: rgba(12, 8, 50, 0.96);
+      backdrop-filter: blur(10px);
+      border-color: rgba(250,208,5,.55);
+      box-shadow: 0 12px 45px rgba(0,0,0,0.5), 0 0 40px rgba(250,208,5,0.12);
+      transform: rotateY(180deg);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+    .honor-back-title {
+      font-family: var(--ff-display);
+      font-size: 1rem; font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      padding-bottom: .6rem;
+      border-bottom: 1px solid var(--gold-mid);
+      letter-spacing: .5px;
+    }
+
+    .honor-back-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: .55rem;
+    }
+    .honor-back-list li {
+      font-size: .8rem; line-height: 1.5;
+      color: rgba(255,255,255,0.9);
+      padding-left: 1.1rem;
+      position: relative; font-weight: 400;
+    }
+    .honor-back-list li::before {
+      content: '◆'; position: absolute; left: 0;
+      font-size: .38rem; top: .38rem;
+      color: var(--gold);
+    }
+
     .honor-num {
       font-family: var(--ff-display);
       font-size: 2.1rem; font-weight: 700;
@@ -472,7 +537,10 @@
       background-position: right 1rem center;
       padding-right: 2.5rem;
     }
-    select option { background: rgb(54,54,177); color: rgb(250,208,5); }
+    select option {
+      background: rgb(18, 18, 80);
+      color: #ffffff;
+    }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
       filter: invert(85%) sepia(60%) saturate(500%) hue-rotate(0deg);
@@ -964,15 +1032,7 @@
       animation: sweep 1.5s linear infinite;
     }
 
-    /* Honor cards — glass depth */
-    .honor-card {
-      background: rgba(20,15,60,0.6);
-      backdrop-filter: blur(6px);
-    }
-    .honor-card:hover {
-      background: rgba(45,35,120,0.5);
-      box-shadow: 0 12px 45px rgba(0,0,0,0.4), 0 0 35px rgba(250,208,5,0.1);
-    }
+    /* Honor cards — glass depth handled in main card styles above */
 
     /* Guideline cards */
     .guideline-card {
@@ -1101,19 +1161,24 @@
 
     /* ── optgroup styling ── */
     select optgroup {
-      color: rgba(250,208,5,0.55);
+      background: rgb(12, 12, 60);
+      color: rgb(250,208,5);
       font-size: .75rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
     select optgroup option {
-      color: rgb(250,208,5);
+      background: rgb(22, 22, 90);
+      color: #ffffff;
       font-size: .88rem;
-      font-weight: 300;
+      font-weight: 400;
       text-transform: none;
       letter-spacing: 0;
       padding-left: 1rem;
+    }
+    select option:first-child {
+      color: rgba(255,255,255,0.5);
     }
 
     /* ── Alignment fixes ── */
@@ -1137,6 +1202,8 @@
 
     /* Honor card equal height */
     .honors-grid { align-items: stretch; }
+    .honor-card { height: 100%; }
+    .honor-card-inner { height: 100%; min-height: 200px; }
 
     /* Criteria grid equal height */
     .criteria-grid { align-items: stretch; }
@@ -1360,7 +1427,7 @@
 
       <div class="tracker-item">
         <span class="tracker-icon">🗳️</span>
-        <span class="tracker-num" id="tVotes">9,285</span>
+        <span class="tracker-num" id="tVotes">1,248</span>
         <span class="tracker-lbl">Votes Cast</span>
         <div class="tracker-bar">
           <div class="tracker-bar-fill" style="--pct:78%"></div>
@@ -1369,7 +1436,7 @@
 
       <div class="tracker-item">
         <span class="tracker-icon">🏅</span>
-        <span class="tracker-num" id="tNominees">582</span>
+        <span class="tracker-num" id="tNominees">342</span>
         <span class="tracker-lbl">Nominees</span>
         <div class="tracker-bar">
           <div class="tracker-bar-fill" style="--pct:55%"></div>
@@ -1772,15 +1839,12 @@
               <label>Achievement Category <span class="req">*</span></label>
               <select id="achievementCategory" required>
                 <option value="">Select award</option>
-                <option value="Award for Entrepreneur Achievement">Award for Entrepreneur Achievement</option>
-                <option value="Award for Professional Excellence">Award for Professional Excellence</option>
-                <option value="Academics, Literature, Performing Arts, Politics &amp; Sports">Academics, Literature, Performing Arts, Politics &amp; Sports</option>
-                <option value="Award for Technology Leadership">Award for Technology Leadership</option>
-                <option value="Award for Social Entrepreneur">Award for Social Entrepreneur</option>
-                <option value="Award for Best Alumni Chapter Leader">Award for Best Alumni Chapter Leader</option>
-                <option value="Award for Contribution to Alma Mater">Award for Contribution to Alma Mater</option>
-                <option value="Award for GEU Ambassador">Award for GEU Ambassador</option>
-                <option value="Chancellor's Award">Chancellor's Award</option>
+                <option value="Award for Professional &amp; Entrepreneurial Excellence">Award for Professional &amp; Entrepreneurial Excellence</option>
+                <option value="Award for Academic, Research &amp; Technology Leadership">Award for Academic, Research &amp; Technology Leadership</option>
+                <option value="Award for Arts, Culture, Sports &amp; Public Leadership">Award for Arts, Culture, Sports &amp; Public Leadership</option>
+                <option value="Award for Social Impact &amp; Community Leadership">Award for Social Impact &amp; Community Leadership</option>
+                <option value="Distinguished Alumni &amp; University Contribution Award">Distinguished Alumni &amp; University Contribution Award</option>
+                <option value="Award for Serving the Nation">Award for Serving the Nation</option>
               </select>
             </div>
           </div>
@@ -1789,46 +1853,47 @@
               <label>Sub Category <span class="req">*</span></label>
               <select id="subCategory" required>
                 <option value="">Select sub category</option>
-                <optgroup label="Entrepreneur Achievement">
-                  <option value="Startup Founder">Startup Founder</option>
-                  <option value="Scale-up &amp; Growth">Scale-up &amp; Growth</option>
-                  <option value="Social Enterprise">Social Enterprise</option>
-                  <option value="Women Entrepreneur">Women Entrepreneur</option>
+                <optgroup label="01 · Professional &amp; Entrepreneurial Excellence">
+                  <option value="Entrepreneurship &amp; Startup Leadership">Entrepreneurship &amp; Startup Leadership</option>
+                  <option value="Corporate &amp; Industry Leadership">Corporate &amp; Industry Leadership</option>
+                  <option value="Public Sector &amp; Government Professional Excellence">Public Sector &amp; Government Professional Excellence</option>
+                  <option value="Business Innovation &amp; Growth">Business Innovation &amp; Growth</option>
+                  <option value="Global Professional Achievement">Global Professional Achievement</option>
                 </optgroup>
-                <optgroup label="Professional Excellence">
-                  <option value="Corporate Leadership">Corporate Leadership</option>
-                  <option value="Government / Public Sector">Government / Public Sector</option>
-                  <option value="Defence &amp; Civil Services">Defence &amp; Civil Services</option>
-                  <option value="Healthcare &amp; Medicine">Healthcare &amp; Medicine</option>
+                <optgroup label="02 · Academic, Research &amp; Technology Leadership">
+                  <option value="Academic &amp; Teaching Excellence">Academic &amp; Teaching Excellence</option>
+                  <option value="Research, Patents &amp; Publications">Research, Patents &amp; Publications</option>
+                  <option value="Technology &amp; Digital Innovation">Technology &amp; Digital Innovation</option>
+                  <option value="Engineering &amp; Scientific Contributions">Engineering &amp; Scientific Contributions</option>
+                  <option value="Emerging Technologies &amp; Innovation Leadership">Emerging Technologies &amp; Innovation Leadership</option>
                 </optgroup>
-                <optgroup label="Academics, Arts &amp; Beyond">
-                  <option value="Academic Research">Academic Research</option>
-                  <option value="Literature &amp; Writing">Literature &amp; Writing</option>
-                  <option value="Performing Arts">Performing Arts</option>
-                  <option value="Politics &amp; Governance">Politics &amp; Governance</option>
-                  <option value="Sports &amp; Athletics">Sports &amp; Athletics</option>
+                <optgroup label="03 · Arts, Culture, Sports &amp; Public Leadership">
+                  <option value="Literature, Media &amp; Creative Arts">Literature, Media &amp; Creative Arts</option>
+                  <option value="Performing Arts &amp; Entertainment">Performing Arts &amp; Entertainment</option>
+                  <option value="Sports &amp; Athletic Excellence">Sports &amp; Athletic Excellence</option>
+                  <option value="Politics, Governance &amp; Public Leadership">Politics, Governance &amp; Public Leadership</option>
+                  <option value="Cultural Promotion &amp; Social Influence">Cultural Promotion &amp; Social Influence</option>
                 </optgroup>
-                <optgroup label="Technology Leadership">
-                  <option value="AI / Machine Learning">AI / Machine Learning</option>
-                  <option value="Software &amp; Product">Software &amp; Product</option>
-                  <option value="Hardware &amp; Innovation">Hardware &amp; Innovation</option>
-                  <option value="Patent &amp; Research">Patent &amp; Research</option>
+                <optgroup label="04 · Social Impact &amp; Community Leadership">
+                  <option value="Social Entrepreneurship &amp; NGO Leadership">Social Entrepreneurship &amp; NGO Leadership</option>
+                  <option value="Community Development &amp; Public Welfare">Community Development &amp; Public Welfare</option>
+                  <option value="Education, Healthcare &amp; Rural Development">Education, Healthcare &amp; Rural Development</option>
+                  <option value="Sustainability &amp; Environmental Conservation">Sustainability &amp; Environmental Conservation</option>
+                  <option value="Youth Empowerment &amp; Skill Development">Youth Empowerment &amp; Skill Development</option>
                 </optgroup>
-                <optgroup label="Social Impact">
-                  <option value="Community Development">Community Development</option>
-                  <option value="Environmental Sustainability">Environmental Sustainability</option>
-                  <option value="Education &amp; Literacy">Education &amp; Literacy</option>
-                  <option value="Healthcare Access">Healthcare Access</option>
+                <optgroup label="05 · Distinguished Alumni &amp; University Contribution">
+                  <option value="Alumni Chapter Leadership">Alumni Chapter Leadership</option>
+                  <option value="Contribution to Placements &amp; Mentorship">Contribution to Placements &amp; Mentorship</option>
+                  <option value="Industry Collaboration &amp; Institutional Partnerships">Industry Collaboration &amp; Institutional Partnerships</option>
+                  <option value="University Branding &amp; Global Representation">University Branding &amp; Global Representation</option>
+                  <option value="Lifetime Contribution to Alma Mater">Lifetime Contribution to Alma Mater</option>
                 </optgroup>
-                <optgroup label="Alumni Engagement">
-                  <option value="Chapter Leadership">Chapter Leadership</option>
-                  <option value="Placement &amp; Mentorship">Placement &amp; Mentorship</option>
-                  <option value="Contribution to Alma Mater">Contribution to Alma Mater</option>
-                  <option value="GEU Brand Ambassador">GEU Brand Ambassador</option>
-                </optgroup>
-                <optgroup label="Chancellor's Award">
-                  <option value="Lifetime Achievement">Lifetime Achievement</option>
-                  <option value="Global Recognition">Global Recognition</option>
+                <optgroup label="06 · Award for Serving the Nation">
+                  <option value="Armed Forces, Defense &amp; National Security">Armed Forces, Defense &amp; National Security</option>
+                  <option value="Civil Services, Governance &amp; Public Administration">Civil Services, Governance &amp; Public Administration</option>
+                  <option value="Healthcare, Law &amp; Public Welfare">Healthcare, Law &amp; Public Welfare</option>
+                  <option value="Science, Technology &amp; Nation Building">Science, Technology &amp; Nation Building</option>
+                  <option value="Social Reform &amp; Humanitarian Service">Social Reform &amp; Humanitarian Service</option>
                 </optgroup>
               </select>
               <span class="field-hint">Select the sub category that best describes the nominee's area of distinction</span>
@@ -1947,15 +2012,36 @@
 
   /* ── HONORS DATA ─────────────────────────────────────────── */
   const HONORS = [
-    { title: 'Award for Entrepreneur Achievement',       desc: 'Proven track record of sustained value & job creation, national/international recognition, or exceptional business growth.' },
-    { title: 'Award for Professional Excellence',        desc: 'Leadership at reputed organizations, prestigious rank in government/public sector, exceptional achievements in your field.' },
-    { title: 'Academics, Literature, Performing Arts, Politics & Sports', desc: 'Research contributions, competitive exam excellence, achievements in literature, performing arts, politics, or sports.' },
-    { title: 'Award for Technology Leadership',          desc: 'Pioneering innovations in technology application, patents & publications, design & development achievements.' },
-    { title: 'Award for Social Entrepreneur',            desc: 'Remarkable service to society, leadership in social causes, and measurable scale of impact on communities.' },
-    { title: 'Award for Best Alumni Chapter Leader',     desc: 'Spearheaded the Alumni Chapter, driving engagement in alumni initiatives and building a strong placement referral network.' },
-    { title: 'Award for Contribution to Alma Mater',    desc: 'Created value for GEU through media promotions, research, industry tie-ups, MoUs, career support, or financial support.' },
-    { title: 'Award for GEU Ambassador',                 desc: 'Drew global media attention to the GEU brand through individual accomplishment and outstanding representation.' },
-    { title: "Chancellor's Award",                       desc: 'Significant contributions to society whose career achievements reflect the excellence and values of Graphic Era University.' },
+    {
+      title: 'Award for Professional & Entrepreneurial Excellence',
+      desc:  'Recognizing alumni who have demonstrated outstanding leadership, innovation, business growth, and professional success across industries and enterprises.',
+      subs:  ['Entrepreneurship & Startup Leadership','Corporate & Industry Leadership','Public Sector & Government Professional Excellence','Business Innovation & Growth','Global Professional Achievement']
+    },
+    {
+      title: 'Award for Academic, Research & Technology Leadership',
+      desc:  'Honouring alumni who have made exceptional contributions in academics, research, science, innovation, and technology.',
+      subs:  ['Academic & Teaching Excellence','Research, Patents & Publications','Technology & Digital Innovation','Engineering & Scientific Contributions','Emerging Technologies & Innovation Leadership']
+    },
+    {
+      title: 'Award for Arts, Culture, Sports & Public Leadership',
+      desc:  'Celebrating alumni who have excelled in arts, media, literature, sports, politics, and public life.',
+      subs:  ['Literature, Media & Creative Arts','Performing Arts & Entertainment','Sports & Athletic Excellence','Politics, Governance & Public Leadership','Cultural Promotion & Social Influence']
+    },
+    {
+      title: 'Award for Social Impact & Community Leadership',
+      desc:  'Recognizing alumni who have created meaningful impact through social initiatives, sustainability efforts, and community development.',
+      subs:  ['Social Entrepreneurship & NGO Leadership','Community Development & Public Welfare','Education, Healthcare & Rural Development','Sustainability & Environmental Conservation','Youth Empowerment & Skill Development']
+    },
+    {
+      title: 'Distinguished Alumni & University Contribution Award',
+      desc:  'Presented to alumni who have significantly contributed to the growth, reputation, and development of the university and alumni ecosystem.',
+      subs:  ['Alumni Chapter Leadership','Contribution to Placements & Mentorship','Industry Collaboration & Institutional Partnerships','University Branding & Global Representation','Lifetime Contribution to Alma Mater']
+    },
+    {
+      title: 'Award for Serving the Nation',
+      desc:  'Recognizing alumni who have made exceptional contributions toward nation-building through public service, defense, governance, healthcare, innovation, and social leadership.',
+      subs:  ['Armed Forces, Defense & National Security','Civil Services, Governance & Public Administration','Healthcare, Law & Public Welfare','Science, Technology & Nation Building','Social Reform & Humanitarian Service']
+    },
   ];
 
   /* ── BUILD HONORS GRIDS ──────────────────────────────────── */
@@ -1963,10 +2049,23 @@
     const grid = document.getElementById(`honors-${cat}`);
     grid.innerHTML = HONORS.map((h, i) => `
       <div class="honor-card">
-        <span class="honor-num">0${i+1}</span>
-        <div>
-          <span class="honor-text">${h.title}</span>
-          <span class="honor-desc">${h.desc}</span>
+        <div class="honor-card-inner">
+
+          <div class="honor-front">
+            <span class="honor-num">0${i+1}</span>
+            <div>
+              <span class="honor-text">${h.title}</span>
+              <span class="honor-desc">${h.desc}</span>
+            </div>
+          </div>
+
+          <div class="honor-back">
+            <div class="honor-back-title">◆ &nbsp;Sub Categories</div>
+            <ul class="honor-back-list">
+              ${h.subs.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+          </div>
+
         </div>
       </div>`).join('');
   });
