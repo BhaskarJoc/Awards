@@ -693,6 +693,148 @@
     }
 
     /* ══════════════════════════════════════
+       GUIDELINES SECTION
+    ══════════════════════════════════════ */
+    .guidelines-section {
+      background: rgba(0,0,30,.2);
+    }
+
+    .guidelines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    .guideline-card {
+      padding: 2rem 1.75rem;
+      border: 1px solid var(--gold-mid);
+      background: var(--gold-faint);
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      position: relative; overflow: hidden;
+    }
+    .guideline-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(250,208,5,.5);
+      box-shadow: 0 10px 35px rgba(0,0,0,.25), 0 0 20px rgba(250,208,5,.07);
+    }
+    .guideline-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0); transform-origin: center;
+      transition: transform .35s ease;
+    }
+    .guideline-card:hover::after { transform: scaleX(1); }
+
+    .highlight-card {
+      border-color: rgba(250,208,5,.45);
+      background: rgba(250,208,5,.09);
+      text-align: center;
+    }
+
+    .guideline-icon {
+      font-size: 2rem; display: block; margin-bottom: 1rem;
+    }
+
+    .guideline-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.3rem; font-weight: 600;
+      color: var(--gold); margin-bottom: .85rem;
+    }
+
+    .guideline-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: .55rem;
+    }
+    .guideline-list li {
+      font-size: .87rem; line-height: 1.6;
+      color: rgba(250,208,5,.78); padding-left: 1.1rem;
+      position: relative; font-weight: 400;
+    }
+    .guideline-list li::before {
+      content: '◆'; position: absolute; left: 0;
+      font-size: .45rem; top: .35rem;
+      color: var(--gold);
+    }
+    .guideline-list li strong { color: var(--gold); font-weight: 600; }
+
+    .guideline-deadline {
+      font-family: var(--ff-display);
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--gold); margin: .5rem 0;
+      text-shadow: 0 0 30px rgba(250,208,5,.35);
+    }
+    .guideline-note {
+      font-size: .82rem; line-height: 1.6;
+      color: rgba(250,208,5,.72); margin-bottom: 1.5rem; font-weight: 400;
+    }
+    .guideline-cta {
+      display: inline-block;
+      background: var(--gold); color: var(--blue);
+      padding: .6rem 1.75rem;
+      font-size: .78rem; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: background .25s, transform .25s;
+    }
+    .guideline-cta:hover { background: #fff; transform: translateY(-2px); }
+
+    /* ── Judging Criteria ── */
+    .criteria-wrap { margin-top: 1rem; }
+
+    .criteria-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+      font-weight: 700; color: var(--gold);
+      margin-bottom: 2rem;
+    }
+    .criteria-title em { font-style: italic; font-weight: 300; }
+
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .criteria-card {
+      padding: 1.75rem 1.5rem;
+      border: 1px solid var(--gold-mid);
+      background: rgba(250,208,5,.06);
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      position: relative;
+    }
+    .criteria-card:hover {
+      border-color: rgba(250,208,5,.5);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.2);
+    }
+    .criteria-num {
+      font-family: var(--ff-display);
+      font-size: 3rem; font-weight: 700;
+      color: rgba(250,208,5,.14); line-height: 1;
+      display: block; margin-bottom: .5rem;
+    }
+    .criteria-card h4 {
+      font-family: var(--ff-display);
+      font-size: 1.25rem; font-weight: 600;
+      color: var(--gold); margin-bottom: .6rem;
+    }
+    .criteria-card p {
+      font-size: .85rem; line-height: 1.65;
+      color: rgba(250,208,5,.75); font-weight: 400;
+    }
+
+    /* ── Honor desc line ── */
+    .honor-desc {
+      display: block;
+      font-size: .78rem; line-height: 1.5;
+      color: rgba(250,208,5,.65);
+      margin-top: .3rem; font-weight: 300;
+    }
+
+    /* ══════════════════════════════════════
        PARTICLES CANVAS
     ══════════════════════════════════════ */
     #particles-canvas {
@@ -763,6 +905,7 @@
     </div>
     <div class="nav-links">
       <a href="#about"      class="nav-link-hide">About</a>
+      <a href="#guidelines" class="nav-link-hide">Guidelines</a>
       <a href="#categories" class="nav-link-hide">Categories</a>
       <a href="#nominate"   class="nav-cta">Nominate Now</a>
     </div>
@@ -818,16 +961,16 @@
 
     <div class="hero-stats">
       <div class="stat">
-        <span class="stat-num">5</span>
-        <span class="stat-lbl">Honor Categories</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">3</span>
+        <span class="stat-num">9</span>
         <span class="stat-lbl">Award Types</span>
       </div>
       <div class="stat">
-        <span class="stat-num">Feb 15, 2027</span>
-        <span class="stat-lbl">Deadline</span>
+        <span class="stat-num">3</span>
+        <span class="stat-lbl">Categories</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">May 15</span>
+        <span class="stat-lbl">Deadline 2026</span>
       </div>
     </div>
 
@@ -860,9 +1003,9 @@
         <span class="about-icon">🌟</span>
         <h3>The Event</h3>
         <p>
-          Winners will be honored during the Alumni Awards Ceremony — a landmark gathering of Graphic Era's most accomplished alumni, leaders, and visionaries.
+          Winners will be honored during the prestigious Bangalore Meetup — a landmark gathering of Graphic Era's most accomplished alumni, leaders, and visionaries.
         </p>
-        <span class="about-pill">📍 Alumni Awards Ceremony- Dehradun</span>
+        <span class="about-pill">📍 Bangalore Meetup 2026</span>
       </div>
       <div class="about-card">
         <span class="about-icon">📅</span>
@@ -870,7 +1013,96 @@
         <p>
           All nominations must be submitted in full before the deadline. Ensure your submission includes complete achievement details and all supporting evidence.
         </p>
-        <span class="about-pill">⏳ Deadline: 15 Feburary, 2027</span>
+        <span class="about-pill">⏳ Deadline: May 15, 2026</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       GUIDELINES
+  ══════════════════════════════════════ -->
+  <section class="section guidelines-section" id="guidelines">
+    <div class="section-eyebrow">Nomination Guidelines</div>
+    <h2 class="section-title">How to <em>Nominate</em></h2>
+    <p class="section-sub">
+      Read all guidelines carefully before submitting. Nominations are assessed by the GEAA judging committee based on evidence and criteria.
+    </p>
+
+    <div class="guidelines-grid">
+
+      <div class="guideline-card">
+        <span class="guideline-icon">👤</span>
+        <h3>Who Can Nominate</h3>
+        <ul class="guideline-list">
+          <li>Alumni may submit a <strong>Self-Nomination</strong>.</li>
+          <li>Alumni may nominate a <strong>Fellow Alumnus/a</strong>.</li>
+          <li><strong>Staff &amp; faculty</strong> members may also nominate alumni.</li>
+          <li>A nominator may propose multiple alumni across different categories.</li>
+        </ul>
+      </div>
+
+      <div class="guideline-card">
+        <span class="guideline-icon">📋</span>
+        <h3>Submission Requirements</h3>
+        <ul class="guideline-list">
+          <li>Review all award categories before nominating.</li>
+          <li>Provide <strong>relevant proof(s)</strong> supporting the nomination.</li>
+          <li>Clearly describe the nominee's qualities, contributions, and worthiness.</li>
+          <li>All mandatory fields in the Nomination Form must be completed.</li>
+        </ul>
+      </div>
+
+      <div class="guideline-card">
+        <span class="guideline-icon">⚖️</span>
+        <h3>Judging Process</h3>
+        <ul class="guideline-list">
+          <li>Nominations are judged on <strong>award criteria</strong> and evidence provided.</li>
+          <li>The GEAA judging committee reviews all eligible applications.</li>
+          <li>Winners will be honoured at the <strong>Bangalore Meetup 2026</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="guideline-card highlight-card">
+        <span class="guideline-icon">📅</span>
+        <h3>Key Deadline</h3>
+        <p class="guideline-deadline">May 15, 2026</p>
+        <p class="guideline-note">All nominations must be submitted before this date. Late submissions will not be considered.</p>
+        <a href="#nominate" class="guideline-cta">Nominate Now ◆</a>
+      </div>
+
+    </div>
+
+    <!-- Judging Criteria -->
+    <div class="criteria-wrap" id="criteria">
+      <div class="section-eyebrow" style="margin-top:3.5rem;">Judging Criteria</div>
+      <h3 class="criteria-title">Four Pillars of <em>Evaluation</em></h3>
+      <div class="criteria-grid">
+
+        <div class="criteria-card">
+          <span class="criteria-num">01</span>
+          <h4>Impact</h4>
+          <p>Evidence of tangible, measurable impact — and its scale — in your profession, community, or society, inspired by your GEU education.</p>
+        </div>
+
+        <div class="criteria-card">
+          <span class="criteria-num">02</span>
+          <h4>GU Influence</h4>
+          <p>Evidence of how your Graphic Era education played a key role in shaping your success and amplifying your impact.</p>
+        </div>
+
+        <div class="criteria-card">
+          <span class="criteria-num">03</span>
+          <h4>Media Traction</h4>
+          <p>The degree to which your success story is likely to resonate with local, national, or global media in your country of entry or beyond.</p>
+        </div>
+
+        <div class="criteria-card">
+          <span class="criteria-num">04</span>
+          <h4>Inspire Potential</h4>
+          <p>Your capacity and willingness to influence the next generation of students to choose Graphic Era as their study destination.</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -881,9 +1113,9 @@
   ══════════════════════════════════════ -->
   <section class="section cats-section" id="categories">
     <div class="section-eyebrow">Award Classifications</div>
-    <h2 class="section-title">Categories &amp; <em>Available Honors</em></h2>
+    <h2 class="section-title">Categories &amp; <em>Available Awards</em></h2>
     <p class="section-sub">
-      Nominations span three geographic categories. All five honors are available within each category.
+      9 awards across three geographic categories. Select your tab to explore what's available in each.
     </p>
 
     <div class="cat-tabs">
@@ -1045,12 +1277,16 @@
             <div class="field">
               <label>Achievement Category <span class="req">*</span></label>
               <select id="achievementCategory" required>
-                <option value="">Select honor</option>
-                <option value="Entrepreneur Achievement & Professional Excellence">Entrepreneur Achievement &amp; Professional Excellence</option>
-                <option value="Academics, Literature, Performing Arts, Politics & Sports">Academics, Literature, Performing Arts, Politics &amp; Sports</option>
-                <option value="Technology Leadership & Social Entrepreneurship">Technology Leadership &amp; Social Entrepreneurship</option>
-                <option value="Chapter Leadership & Contribution to Alma Mater">Chapter Leadership &amp; Contribution to Alma Mater</option>
-                <option value="Graphic Era Ambassador & Chancellor's Award">Graphic Era Ambassador &amp; Chancellor's Award</option>
+                <option value="">Select award</option>
+                <option value="Award for Entrepreneur Achievement">Award for Entrepreneur Achievement</option>
+                <option value="Award for Professional Excellence">Award for Professional Excellence</option>
+                <option value="Academics, Literature, Performing Arts, Politics &amp; Sports">Academics, Literature, Performing Arts, Politics &amp; Sports</option>
+                <option value="Award for Technology Leadership">Award for Technology Leadership</option>
+                <option value="Award for Social Entrepreneur">Award for Social Entrepreneur</option>
+                <option value="Award for Best Alumni Chapter Leader">Award for Best Alumni Chapter Leader</option>
+                <option value="Award for Contribution to Alma Mater">Award for Contribution to Alma Mater</option>
+                <option value="Award for GEU Ambassador">Award for GEU Ambassador</option>
+                <option value="Chancellor's Award">Chancellor's Award</option>
               </select>
             </div>
           </div>
@@ -1163,15 +1399,19 @@
   /* ── CONFIGURATION ───────────────────────────────────────────
      Replace the value below with your deployed Apps Script URL.
      ──────────────────────────────────────────────────────────── */
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyKemuNyhF0_7h5Pjb2vGkmn2ULvTAV-FkOR4I-ac84e8jPqn63d1nAKDgSUPf2yz3u/exec';
+  const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
 
   /* ── HONORS DATA ─────────────────────────────────────────── */
   const HONORS = [
-    'Entrepreneur Achievement & Professional Excellence',
-    'Academics, Literature, Performing Arts, Politics & Sports',
-    'Technology Leadership & Social Entrepreneurship',
-    'Chapter Leadership & Contribution to Alma Mater',
-    "Graphic Era Ambassador & Chancellor's Award"
+    { title: 'Award for Entrepreneur Achievement',       desc: 'Proven track record of sustained value & job creation, national/international recognition, or exceptional business growth.' },
+    { title: 'Award for Professional Excellence',        desc: 'Leadership at reputed organizations, prestigious rank in government/public sector, exceptional achievements in your field.' },
+    { title: 'Academics, Literature, Performing Arts, Politics & Sports', desc: 'Research contributions, competitive exam excellence, achievements in literature, performing arts, politics, or sports.' },
+    { title: 'Award for Technology Leadership',          desc: 'Pioneering innovations in technology application, patents & publications, design & development achievements.' },
+    { title: 'Award for Social Entrepreneur',            desc: 'Remarkable service to society, leadership in social causes, and measurable scale of impact on communities.' },
+    { title: 'Award for Best Alumni Chapter Leader',     desc: 'Spearheaded the Alumni Chapter, driving engagement in alumni initiatives and building a strong placement referral network.' },
+    { title: 'Award for Contribution to Alma Mater',    desc: 'Created value for GEU through media promotions, research, industry tie-ups, MoUs, career support, or financial support.' },
+    { title: 'Award for GEU Ambassador',                 desc: 'Drew global media attention to the GEU brand through individual accomplishment and outstanding representation.' },
+    { title: "Chancellor's Award",                       desc: 'Significant contributions to society whose career achievements reflect the excellence and values of Graphic Era University.' },
   ];
 
   /* ── BUILD HONORS GRIDS ──────────────────────────────────── */
@@ -1180,7 +1420,10 @@
     grid.innerHTML = HONORS.map((h, i) => `
       <div class="honor-card">
         <span class="honor-num">0${i+1}</span>
-        <span class="honor-text">${h}</span>
+        <div>
+          <span class="honor-text">${h.title}</span>
+          <span class="honor-desc">${h.desc}</span>
+        </div>
       </div>`).join('');
   });
 
