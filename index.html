@@ -1381,9 +1381,9 @@
     }
 
     .tracker-inner {
-      max-width: 960px; margin: 0 auto;
+      max-width: 1100px; margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       position: relative; z-index: 1;
     }
 
@@ -1476,13 +1476,60 @@
 
     @media (max-width: 600px) {
       .tracker-inner {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
       .tracker-item + .tracker-item {
         border-left: none;
+      }
+      .tracker-item:nth-child(odd) {
+        border-right: 1px solid rgba(250,208,5,0.12);
+      }
+      .tracker-item:nth-child(n+3) {
         border-top: 1px solid rgba(250,208,5,0.12);
       }
       .tracker-item { padding: 2rem 1.5rem; }
+    }
+
+    /* ── Privacy Consent Checkbox ── */
+    .consent-label {
+      display: flex; align-items: flex-start; gap: 1rem;
+      cursor: pointer; padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(250,208,5,0.22);
+      background: rgba(250,208,5,0.04);
+      transition: border-color .25s, background .25s;
+      position: relative;
+    }
+    .consent-label:hover {
+      border-color: rgba(250,208,5,0.5);
+      background: rgba(250,208,5,0.08);
+    }
+    .consent-label input[type="checkbox"] {
+      position: absolute; opacity: 0; width: 0; height: 0;
+    }
+    .consent-box {
+      flex-shrink: 0;
+      width: 20px; height: 20px; margin-top: .15rem;
+      border: 2px solid rgba(250,208,5,0.5);
+      background: rgba(250,208,5,0.06);
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .consent-label input:checked ~ .consent-box {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .consent-label input:checked ~ .consent-box::after {
+      content: '✓';
+      font-size: .85rem; font-weight: 700;
+      color: var(--blue); line-height: 1;
+    }
+    .consent-label.err-consent {
+      border-color: #ff6b6b;
+      background: rgba(255,107,107,0.06);
+    }
+    .consent-text {
+      font-size: .85rem; line-height: 1.75;
+      color: rgba(255,255,255,0.82); font-weight: 400;
     }
 
   </style>
@@ -1559,7 +1606,7 @@
 
       <div class="tracker-item">
         <span class="tracker-icon">🗳️</span>
-        <span class="tracker-num" id="tVotes">9,248</span>
+        <span class="tracker-num" id="tVotes">0</span>
         <span class="tracker-lbl">Votes Cast</span>
         <div class="tracker-bar">
           <div class="tracker-bar-fill" style="--pct:78%"></div>
@@ -1568,7 +1615,7 @@
 
       <div class="tracker-item">
         <span class="tracker-icon">🏅</span>
-        <span class="tracker-num" id="tNominees">242</span>
+        <span class="tracker-num" id="tNominees">0</span>
         <span class="tracker-lbl">Nominees</span>
         <div class="tracker-bar">
           <div class="tracker-bar-fill" style="--pct:55%"></div>
@@ -1577,8 +1624,17 @@
 
       <div class="tracker-item">
         <span class="tracker-icon">🏆</span>
-        <span class="tracker-num" id="tCategories">6</span>
+        <span class="tracker-num" id="tCategories">0</span>
         <span class="tracker-lbl">Categories</span>
+        <div class="tracker-bar">
+          <div class="tracker-bar-fill" style="--pct:100%"></div>
+        </div>
+      </div>
+
+      <div class="tracker-item">
+        <span class="tracker-icon">🎯</span>
+        <span class="tracker-num" id="tSubCategories">0</span>
+        <span class="tracker-lbl">Sub Categories</span>
         <div class="tracker-bar">
           <div class="tracker-bar-fill" style="--pct:100%"></div>
         </div>
@@ -1722,7 +1778,7 @@
     <div class="section-eyebrow">Award Classifications</div>
     <h2 class="section-title">Categories &amp; <em>Available Awards</em></h2>
     <p class="section-sub">
-      9 awards across three geographic categories. Select your tab to explore what's available in each.
+      6 awards across three geographic categories. Select your tab to explore what's available in each.
     </p>
 
     <div class="cat-tabs">
@@ -1929,12 +1985,12 @@
           </div>
           <div class="frow">
             <div class="field" style="grid-column: 1 / -1;">
-              <label>LinkedIn Profile URL</label>
+              <label>LinkedIn Profile URL <span class="req">*</span></label>
               <div class="input-icon-wrap">
                 <span class="input-icon">in</span>
-                <input type="url" id="linkedin" placeholder="https://linkedin.com/in/your-profile" style="padding-left:3rem;" />
+                <input type="url" id="linkedin" placeholder="https://linkedin.com/in/your-profile" style="padding-left:3rem;" required />
               </div>
-              <span class="field-hint">Optional — helps the committee verify your professional background</span>
+              <span class="field-hint">Required — the committee uses this to verify your professional background</span>
             </div>
           </div>
         </div>
@@ -2070,11 +2126,23 @@
           <div class="file-list" id="mediaFileList"></div>
         </div>
 
+        <!-- ⑩ Privacy Consent -->
+        <div class="fgroup" style="margin-bottom:2rem;">
+          <div class="fgroup-head"><span class="fgroup-num">10</span> Privacy &amp; Consent</div>
+          <label class="consent-label" for="privacyConsent">
+            <input type="checkbox" id="privacyConsent" required />
+            <span class="consent-box"></span>
+            <span class="consent-text">
+              <strong style="color:var(--gold);font-weight:600;">Privacy Note:</strong>
+              Information submitted through this form, including your name, achievements, and photographs / videos of work, may be used for publicity purposes on GEAA's official social media channels and the alumni portal. Your data is handled with care and in accordance with GEAA's privacy commitments.
+              <span style="color:var(--gold);"> I understand and give my consent. <span class="req">*</span></span>
+            </span>
+          </label>
+          <span id="consentErr" style="display:none;font-size:.72rem;color:#ff6b6b;margin-top:.5rem;display:none;">Please tick this box to proceed with your nomination.</span>
+        </div>
+
         <!-- Submit -->
         <div class="submit-wrap">
-          <p class="submit-note">
-            By submitting this form, you acknowledge that the provided information — including your name, achievements, and photographs — may be used for publicity purposes on GEAA's official social media channels and the alumni portal.
-          </p>
           <button type="submit" class="btn-submit" id="submitBtn">
             <span class="btn-text">◆ &nbsp;Submit Nomination</span>
             <span class="spinner">↻</span>
@@ -2285,7 +2353,7 @@
   const REQUIRED_IDS = [
     'nominationType','fullName','gender','dob',
     'institute','course','branch','passoutYear',
-    'whatsapp','city','email',
+    'whatsapp','city','email','linkedin',
     'company','designation',
     'awardType','achievementCategory','subCategory','achievementDetails'
   ];
@@ -2305,6 +2373,14 @@
     const emailEl = document.getElementById('email');
     if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
       emailEl.classList.add('err'); ok = false;
+    }
+    // Consent checkbox check
+    const consent = document.getElementById('privacyConsent');
+    const consentLabel = consent.closest('.consent-label');
+    if (!consent.checked) {
+      consentLabel.classList.add('err-consent');
+      ok = false;
+      consent.addEventListener('change', () => consentLabel.classList.remove('err-consent'), { once: true });
     }
     return ok;
   }
@@ -2351,6 +2427,7 @@
         whatsapp:            document.getElementById('whatsapp').value,
         city:                document.getElementById('city').value,
         email:               document.getElementById('email').value,
+        linkedin:            document.getElementById('linkedin').value,
         company:             document.getElementById('company').value,
         designation:         document.getElementById('designation').value,
         awardType:           document.getElementById('awardType').value,
@@ -2388,7 +2465,40 @@
     }
   });
 
-  /* ── SMOOTH SCROLL for anchor links ─────────────────────── */
+  /* ── ANIMATED TRACKER COUNTERS ──────────────────────────── */
+  function animateCounter(el, target, duration, prefix, suffix) {
+    const start = performance.now();
+    const isFloat = (target % 1 !== 0);
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = prefix + current.toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = prefix + target.toLocaleString() + suffix;
+    }
+    requestAnimationFrame(update);
+  }
+
+  // Observe tracker section and trigger once visible
+  const trackerSection = document.getElementById('tracker');
+  let countersStarted = false;
+  const trackerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !countersStarted) {
+        countersStarted = true;
+        animateCounter(document.getElementById('tVotes'),      9248, 2000, '', '');
+        animateCounter(document.getElementById('tNominees'),    242, 1600, '', '');
+        animateCounter(document.getElementById('tCategories'),    6,  900, '', '');
+        animateCounter(document.getElementById('tSubCategories'), 30, 1200, '', '');
+      }
+    });
+  }, { threshold: 0.3 });
+  trackerObserver.observe(trackerSection);
+
+
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
